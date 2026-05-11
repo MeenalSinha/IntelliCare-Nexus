@@ -17,6 +17,10 @@ from app.api.trials import router as trials_router
 from app.api.auth_analytics import auth_router, analytics_router
 from app.api.tools import router as tools_router
 
+from mcp.server.sse import SseServerTransport
+from app.mcp_server import app as mcp_app
+from starlette.requests import Request
+
 logger = structlog.get_logger()
 
 
@@ -72,6 +76,30 @@ app.include_router(tools_router, prefix=API_PREFIX)
 @app.websocket("/ws/agents/{session_id}")
 async def websocket_endpoint(websocket: WebSocket, session_id: str, token: str = Query(default="")):
     await websocket_agent_events(websocket, session_id, token)
+
+# --- MCP Streamable HTTP (SSE) Server ---
+sse = SseServerTransport("/mcp/messages")
+
+@app.get("/mcp")
+async def handle_sse(request: Request):
+    """
+    Establish an SSE connection for the MCP Server.
+    This fulfills the Prompt Opinion Marketplace "Streamable HTTP" requirement.
+    """
+    async with sse.connect_sse(
+        request.scope, request.receive, request._send
+    ) as streams:
+        await mcp_app.run(
+            streams[0], streams[1], mcp_app.create_initialization_options()
+        )
+
+@app.post("/mcp/messages")
+async def handle_messages(request: Request):
+    """
+    Receive POST messages from the MCP client.
+    """
+    await sse.handle_post_message(request.scope, request.receive, request._send)
+# ----------------------------------------
 
 
 @app.get("/health")

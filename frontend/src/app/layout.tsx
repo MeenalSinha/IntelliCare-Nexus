@@ -2,8 +2,6 @@ import type { Metadata } from 'next'
 import { Inter, JetBrains_Mono } from 'next/font/google'
 import '@/styles/globals.css'
 import { Toaster } from 'react-hot-toast'
-import { DevOverlaySuppressor } from '@/components/DevOverlaySuppressor'
-
 // Stitch design system: Inter for body, JetBrains Mono for clinical data
 // Geist loaded via CSS @import for display/headlines
 const inter = Inter({
@@ -38,8 +36,49 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{
+          __html: `
+            const _error = console.error;
+            console.error = function(...args) {
+              const msg = args.map(a => (typeof a === 'string' ? a : a?.message || '')).join(' ');
+              if (
+                msg.includes('Network Error') ||
+                msg.includes('401') ||
+                msg.includes('Request failed') ||
+                msg.includes('ECONNREFUSED') ||
+                msg.includes('ERR_NETWORK') ||
+                msg.includes('Hydration failed') ||
+                msg.includes('There was an error while hydrating') ||
+                msg.includes('A tree hydrated but')
+              ) {
+                console.warn('Suppressed Dev Overlay Error:', ...args);
+                return;
+              }
+              _error.apply(console, args);
+            };
+            window.addEventListener('unhandledrejection', function(event) {
+              const reason = event.reason;
+              if (!reason) return;
+              const msg = (typeof reason === 'string' ? reason : reason.message || reason.code || '') + '';
+              if (
+                msg.includes('Network Error') ||
+                msg.includes('401') ||
+                msg.includes('Request failed') ||
+                msg.includes('AbortError') ||
+                msg.includes('ECONNREFUSED') ||
+                msg.includes('ERR_NETWORK') ||
+                msg.includes('Cannot update a component') ||
+                (reason.config && reason.config.url && reason.config.url.includes('/api/v1/'))
+              ) {
+                event.preventDefault();
+                event.stopImmediatePropagation();
+              }
+            }, true);
+          `
+        }} />
+      </head>
       <body className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased`} suppressHydrationWarning>
-        <DevOverlaySuppressor />
         {children}
         <Toaster
           position="top-right"

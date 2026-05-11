@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Inter, JetBrains_Mono } from 'next/font/google'
 import '@/styles/globals.css'
 import { Toaster } from 'react-hot-toast'
+import { DevOverlaySuppressor } from '@/components/DevOverlaySuppressor'
 
 // Stitch design system: Inter for body, JetBrains Mono for clinical data
 // Geist loaded via CSS @import for display/headlines
@@ -38,6 +39,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
       <body className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased`} suppressHydrationWarning>
+        <DevOverlaySuppressor />
         {children}
         <Toaster
           position="top-right"

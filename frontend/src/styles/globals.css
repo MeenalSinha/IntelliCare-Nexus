@@ -1,0 +1,317 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+  --font-inter: 'Inter', sans-serif;
+  --font-outfit: 'Outfit', sans-serif;
+  --font-jetbrains: 'JetBrains Mono', monospace;
+
+  /* Core palette */
+  --void: #050810;
+  --abyss: #080d1a;
+  --obsidian: #0d1426;
+
+  /* Accent glows */
+  --cyan: #00f5ff;
+  --cyan-mid: #06d6f5;
+  --teal: #00ffd4;
+  --violet: #a855f7;
+  --emerald: #00ff87;
+  --amber: #fbbf24;
+  --rose: #f43f5e;
+
+  /* Surfaces */
+  --surface-1: rgba(255, 255, 255, 0.03);
+  --surface-2: rgba(255, 255, 255, 0.06);
+  --surface-3: rgba(255, 255, 255, 0.09);
+  --surface-border: rgba(255, 255, 255, 0.08);
+
+  /* Shadows */
+  --shadow-panel: 0 4px 24px rgba(0, 0, 0, 0.4), 0 1px 0 rgba(255, 255, 255, 0.06);
+  --glow-cyan: 0 0 20px rgba(0, 245, 255, 0.3), 0 0 60px rgba(0, 245, 255, 0.1);
+  --glow-violet: 0 0 20px rgba(168, 85, 247, 0.3);
+
+  --radius: 0.75rem;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  font-family: var(--font-inter);
+  background-color: var(--void);
+  color: rgba(255, 255, 255, 0.9);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--abyss);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 245, 255, 0.2);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 245, 255, 0.4);
+}
+
+/* Selection */
+::selection {
+  background: rgba(0, 245, 255, 0.2);
+  color: #00f5ff;
+}
+
+/* =============================================
+   GLASS PANEL SYSTEM
+============================================= */
+.glass-panel {
+  background: var(--surface-1);
+  border: 1px solid var(--surface-border);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: var(--shadow-panel);
+}
+
+.glass-panel-elevated {
+  background: var(--surface-2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* =============================================
+   GLOW BORDERS
+============================================= */
+.border-glow-cyan {
+  border-color: rgba(0, 245, 255, 0.3);
+  box-shadow: 0 0 0 1px rgba(0, 245, 255, 0.1), inset 0 0 20px rgba(0, 245, 255, 0.03);
+}
+
+.border-glow-violet {
+  border-color: rgba(168, 85, 247, 0.3);
+  box-shadow: 0 0 0 1px rgba(168, 85, 247, 0.1), inset 0 0 20px rgba(168, 85, 247, 0.03);
+}
+
+.border-glow-emerald {
+  border-color: rgba(0, 255, 135, 0.3);
+  box-shadow: 0 0 0 1px rgba(0, 255, 135, 0.1);
+}
+
+.border-glow-rose {
+  border-color: rgba(244, 63, 94, 0.3);
+  box-shadow: 0 0 0 1px rgba(244, 63, 94, 0.1);
+}
+
+/* =============================================
+   TEXT EFFECTS
+============================================= */
+.text-glow-cyan {
+  color: #00f5ff;
+  text-shadow: 0 0 20px rgba(0, 245, 255, 0.5);
+}
+
+.text-glow-violet {
+  color: #a855f7;
+  text-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+}
+
+.text-gradient-cyan {
+  background: linear-gradient(135deg, #00f5ff 0%, #06d6f5 50%, #2dd4bf 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-violet {
+  background: linear-gradient(135deg, #a855f7 0%, #8b5cf6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-hero {
+  background: linear-gradient(135deg, #ffffff 0%, #00f5ff 50%, #a855f7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* =============================================
+   AGENT NODE ANIMATIONS
+============================================= */
+@keyframes agentPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(0, 245, 255, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(0, 245, 255, 0);
+  }
+}
+
+@keyframes agentProcessing {
+  0% { border-color: rgba(0, 245, 255, 0.3); }
+  33% { border-color: rgba(168, 85, 247, 0.6); }
+  66% { border-color: rgba(0, 255, 135, 0.6); }
+  100% { border-color: rgba(0, 245, 255, 0.3); }
+}
+
+@keyframes dataFlow {
+  0% { stroke-dashoffset: 100; }
+  100% { stroke-dashoffset: 0; }
+}
+
+.agent-pulse {
+  animation: agentPulse 2s ease-in-out infinite;
+}
+
+.agent-processing {
+  animation: agentProcessing 1.5s ease-in-out infinite;
+}
+
+/* =============================================
+   LOADING STATES
+============================================= */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.04) 0%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0.04) 100%
+  );
+  background-size: 1000px 100%;
+  animation: shimmer 2s linear infinite;
+}
+
+/* =============================================
+   APPROVAL METER
+============================================= */
+.approval-meter-fill {
+  background: linear-gradient(90deg, #f43f5e 0%, #fbbf24 40%, #00ff87 80%, #00f5ff 100%);
+  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* =============================================
+   GRID BACKGROUND
+============================================= */
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(0, 245, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 245, 255, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* =============================================
+   STATUS BADGES
+============================================= */
+.status-pending {
+  background: rgba(251, 191, 36, 0.15);
+  color: #fbbf24;
+  border: 1px solid rgba(251, 191, 36, 0.3);
+}
+
+.status-approved {
+  background: rgba(0, 255, 135, 0.15);
+  color: #00ff87;
+  border: 1px solid rgba(0, 255, 135, 0.3);
+}
+
+.status-denied {
+  background: rgba(244, 63, 94, 0.15);
+  color: #f43f5e;
+  border: 1px solid rgba(244, 63, 94, 0.3);
+}
+
+.status-running {
+  background: rgba(0, 245, 255, 0.15);
+  color: #00f5ff;
+  border: 1px solid rgba(0, 245, 255, 0.3);
+}
+
+.status-critical {
+  background: rgba(244, 63, 94, 0.15);
+  color: #f43f5e;
+  border: 1px solid rgba(244, 63, 94, 0.3);
+}
+
+/* =============================================
+   RISK INDICATORS
+============================================= */
+.risk-critical { color: #f43f5e; }
+.risk-high { color: #f97316; }
+.risk-medium { color: #fbbf24; }
+.risk-low { color: #00ff87; }
+
+/* =============================================
+   REACT FLOW CUSTOM STYLES
+============================================= */
+.react-flow__node {
+  font-family: var(--font-inter);
+}
+
+.react-flow__edge-path {
+  stroke-dasharray: 5;
+  animation: dataFlow 2s linear infinite;
+}
+
+.react-flow__background {
+  background-color: transparent !important;
+}
+
+/* =============================================
+   SIDEBAR NAVIGATION
+============================================= */
+.nav-item {
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.nav-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, #00f5ff, #a855f7);
+  border-radius: 0 2px 2px 0;
+  box-shadow: 0 0 8px rgba(0, 245, 255, 0.6);
+}
+
+/* =============================================
+   DEMO MODE
+============================================= */
+.demo-mode-active {
+  animation: demoBorderPulse 3s ease-in-out infinite;
+}
+
+@keyframes demoBorderPulse {
+  0%, 100% { border-color: rgba(0, 245, 255, 0.3); }
+  50% { border-color: rgba(168, 85, 247, 0.6); box-shadow: 0 0 30px rgba(168, 85, 247, 0.2); }
+}
+
+/* =============================================
+   TOOLTIP
+============================================= */
+[data-radix-tooltip-content] {
+  background: var(--obsidian) !important;
+  border: 1px solid rgba(0, 245, 255, 0.2) !important;
+  font-size: 0.75rem !important;
+}

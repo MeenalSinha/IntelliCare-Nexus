@@ -1,0 +1,55 @@
+graph TB
+    subgraph Frontend ["Frontend - Next.js 15 + TypeScript"]
+        LP[Landing Page]
+        DB[Dashboard]
+        PAT[Patients]
+        PA[Prior Auth Workspace]
+        CT[Clinical Trials]
+        AO[Agent Orchestration]
+        AN[Analytics]
+        AU[Audit & Compliance]
+    end
+
+    subgraph Backend ["Backend - FastAPI + Python 3.12"]
+        API[REST API Layer]
+        WS[WebSocket Handler]
+        AUTH[JWT Auth]
+    end
+
+    subgraph Agents ["Multi-Agent System - LangGraph"]
+        ORC[Orchestrator]
+        CCA[Clinical Context Agent]
+        PAA[Prior Auth Agent]
+        IPA[Insurance Policy Agent]
+        MNA[Medical Necessity Agent]
+        TMA[Trial Matchmaker Agent]
+        ERA[Eligibility Reasoning Agent]
+        PCA[Patient Communication Agent]
+        CDA[Care Coordination Agent]
+        ACA[Audit Compliance Agent]
+    end
+
+    subgraph AI ["AI Layer - Google Gemini 2.5"]
+        GEM[Gemini 2.5 Flash]
+        RAG[RAG Pipeline]
+        EMB[Embedding Search]
+    end
+
+    subgraph Data ["Data Layer"]
+        PG[(PostgreSQL)]
+        RD[(Redis Pub/Sub)]
+        CH[(ChromaDB Vector)]
+    end
+
+    subgraph External ["External APIs"]
+        FHIR[HAPI FHIR Server]
+        CTV[ClinicalTrials.gov API]
+    end
+
+    Frontend --> Backend
+    Backend --> Agents
+    Agents --> AI
+    Agents --> Data
+    Agents --> External
+    WS --> RD
+    RD --> Frontend

@@ -1,0 +1,67 @@
+# ── Environment & Secrets ──────────────────────────────────────
+infra/.env
+.env
+.env.local
+.env.*.local
+
+# ── Python ─────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+.venv/
+venv/
+env/
+pip-wheel-metadata/
+.mypy_cache/
+.dmypy.json
+.pytest_cache/
+.ruff_cache/
+
+# ── Node / Next.js ─────────────────────────────────────────────
+node_modules/
+frontend/node_modules/
+.next/
+frontend/.next/
+frontend/out/
+frontend/build/
+*.tsbuildinfo
+
+# ── Docker ─────────────────────────────────────────────────────
+# (docker-compose.yml is intentionally included)
+infra/postgres_data/
+infra/redis_data/
+infra/chroma_data/
+
+# ── Database / ML artifacts ────────────────────────────────────
+*.db
+*.sqlite3
+*.pkl
+*.joblib
+chroma_data/
+
+# ── Logs & Temp ────────────────────────────────────────────────
+*.log
+*.tmp
+*.temp
+logs/
+.DS_Store
+Thumbs.db
+
+# ── IDE ────────────────────────────────────────────────────────
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+
+# ── Test artifacts ─────────────────────────────────────────────
+test_local.py
+htmlcov/
+.coverage
+coverage.xml

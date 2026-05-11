@@ -93,10 +93,12 @@ async def handle_sse(request: Request):
             streams[0], streams[1], mcp_app.create_initialization_options()
         )
 
+@app.post("/mcp")
 @app.post("/mcp/messages")
 async def handle_messages(request: Request):
     """
     Receive POST messages from the MCP client.
+    Supports both /mcp and /mcp/messages endpoints.
     """
     await sse.handle_post_message(request.scope, request.receive, request._send)
 # ----------------------------------------

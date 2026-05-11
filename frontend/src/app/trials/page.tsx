@@ -72,10 +72,10 @@ export default function TrialsPage() {
         <div className="p-5 border-b border-white/6 space-y-4">
           <div>
             <h2 className="font-display font-bold text-white">Clinical Trial Matchmaker</h2>
-            <p className="text-xs text-white/40 mt-0.5">AI-powered precision medicine matching</p>
+            <p className="text-xs text-white/80 mt-0.5">AI-powered precision medicine matching</p>
           </div>
           <div>
-            <label className="text-xs text-white/40 mb-1.5 block">Patient</label>
+            <label className="text-xs text-white/80 mb-1.5 block">Patient</label>
             <select
               value={selectedPatient}
               onChange={e => setSelectedPatient(e.target.value)}
@@ -139,7 +139,7 @@ export default function TrialsPage() {
                 >
                   <div className="flex items-start justify-between gap-2 mb-2">
                     <div className="flex-1 min-w-0">
-                      <p className="text-xs font-mono text-white/30 mb-0.5">{match.trial?.nct_id}</p>
+                      <p className="text-xs font-mono text-white/70 mb-0.5">{match.trial?.nct_id}</p>
                       <p className="text-sm font-medium text-white/80 leading-snug line-clamp-2">
                         {match.trial?.title}
                       </p>
@@ -165,16 +165,16 @@ export default function TrialsPage() {
                     </div>
                   </div>
                   <div className="flex items-center gap-3 mt-2">
-                    <span className="text-xs text-white/30">{match.trial?.phase || '—'}</span>
+                    <span className="text-xs text-white/70">{match.trial?.phase || '—'}</span>
                     <span className="text-white/15">•</span>
-                    <span className="text-xs text-white/30 truncate">{match.trial?.sponsor}</span>
+                    <span className="text-xs text-white/70 truncate">{match.trial?.sponsor}</span>
                   </div>
                 </motion.div>
               )
             })}
           </AnimatePresence>
           {!loading && matches.length === 0 && (
-            <div className="text-center py-10 text-white/20 text-xs">
+            <div className="text-center py-10 text-white/50 text-xs">
               <p>Select a patient and click</p>
               <p>"Find Matching Trials" to begin</p>
             </div>
@@ -192,7 +192,7 @@ export default function TrialsPage() {
                 <span className="text-xs font-mono text-cyan-400/60 bg-cyan-500/10 border border-cyan-500/20 px-3 py-1 rounded-lg">
                   {selectedMatch.trial?.nct_id}
                 </span>
-                <span className="text-xs text-white/40">{selectedMatch.trial?.phase}</span>
+                <span className="text-xs text-white/80">{selectedMatch.trial?.phase}</span>
                 <span className="text-xs px-2.5 py-1 rounded-lg border"
                   style={{
                     color: getMatchColor(selectedMatch.match_score),
@@ -205,7 +205,7 @@ export default function TrialsPage() {
               <h1 className="font-display text-xl font-bold text-white leading-snug">
                 {selectedMatch.trial?.title}
               </h1>
-              <p className="text-sm text-white/40 mt-1">{selectedMatch.trial?.sponsor}</p>
+              <p className="text-sm text-white/80 mt-1">{selectedMatch.trial?.sponsor}</p>
             </div>
 
             {/* Radar + eligibility grid */}
@@ -277,12 +277,12 @@ export default function TrialsPage() {
                   <div className="flex items-center gap-1 bg-white/5 rounded-lg p-1">
                     <button onClick={() => setActiveTab('en')}
                       className={cn('px-3 py-1 rounded-md text-xs font-medium transition-all',
-                        activeTab === 'en' ? 'bg-violet-500/30 text-violet-300' : 'text-white/40')}>
+                        activeTab === 'en' ? 'bg-violet-500/30 text-violet-300' : 'text-white/80')}>
                       English
                     </button>
                     <button onClick={() => setActiveTab('hi')}
                       className={cn('px-3 py-1 rounded-md text-xs font-medium transition-all',
-                        activeTab === 'hi' ? 'bg-violet-500/30 text-violet-300' : 'text-white/40')}>
+                        activeTab === 'hi' ? 'bg-violet-500/30 text-violet-300' : 'text-white/80')}>
                       Hindi
                     </button>
                   </div>
@@ -313,7 +313,7 @@ export default function TrialsPage() {
                       </svg>
                       <div>
                         <p className="text-xs font-medium text-white/70">{loc.facility}</p>
-                        <p className="text-xs text-white/30">{loc.city}, {loc.state || loc.country}</p>
+                        <p className="text-xs text-white/70">{loc.city}, {loc.state || loc.country}</p>
                       </div>
                     </div>
                   ))}
@@ -323,7 +323,7 @@ export default function TrialsPage() {
           </div>
         ) : (
           <div className="flex items-center justify-center h-full">
-            <div className="text-center text-white/25">
+            <div className="text-center text-white/60">
               <svg className="w-12 h-12 mx-auto mb-4 opacity-30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
                 <path d="M9 3H5a2 2 0 0 0-2 2v4"/><path d="M9 3h6"/><path d="M15 3h4a2 2 0 0 1 2 2v4"/>
                 <circle cx="12" cy="12" r="3"/>

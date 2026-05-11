@@ -18,10 +18,10 @@ const StatCard = ({ title, value, sub, colorClass, icon, delay = 0 }: any) => (
   >
     <div className="flex items-start justify-between mb-4">
       <div className="flex-1">
-        <p className="text-[11px] font-display font-semibold uppercase tracking-widest mb-1 text-slate-400/80">
+        <p className="text-[11px] font-display font-semibold uppercase tracking-widest mb-1 text-slate-200/80">
           {title}
         </p>
-        <p className="text-[11px] text-slate-500">{sub}</p>
+        <p className="text-[11px] text-slate-300">{sub}</p>
       </div>
       <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ml-3 bg-white/[0.03] border border-white/[0.08] shadow-inner">
         {icon}
@@ -93,7 +93,7 @@ export default function DashboardPage() {
             style={{ color: '#dbe2f7', letterSpacing: '-0.02em' }}>
             Clinical Command Center
           </motion.h1>
-          <p className="text-sm mt-1" style={{ color: 'rgba(186,201,204,0.5)' }}>
+          <p className="text-sm mt-1" style={{ color: 'rgba(255,255,255,0.8)' }}>
             Autonomous Clinical Decision Platform
           </p>
         </div>
@@ -134,11 +134,11 @@ export default function DashboardPage() {
               <h3 className="text-sm font-display font-semibold text-white tracking-wide">
                 Approval Trends
               </h3>
-              <p className="text-[11px] mt-1 text-slate-400">
+              <p className="text-[11px] mt-1 text-slate-200">
                 14-day authorization data · real-time
               </p>
             </div>
-            <div className="flex items-center gap-5 text-[11px] font-medium text-slate-400 uppercase tracking-wider">
+            <div className="flex items-center gap-5 text-[11px] font-medium text-slate-200 uppercase tracking-wider">
               <span className="flex items-center gap-2"><span className="w-2.5 h-2.5 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(0,229,255,0.6)]"/>Submitted</span>
               <span className="flex items-center gap-2"><span className="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(0,255,135,0.6)]"/>Approved</span>
               <span className="flex items-center gap-2"><span className="w-2.5 h-2.5 rounded-full bg-rose-400 shadow-[0_0_8px_rgba(244,63,94,0.6)]"/>Denied</span>
@@ -147,7 +147,7 @@ export default function DashboardPage() {
           {loading ? (
             <div className="h-48 skeleton rounded-xl" />
           ) : trends.length === 0 || trends.every((t: any) => t.submitted === 0) ? (
-            <div className="h-48 flex items-center justify-center text-sm" style={{ color: 'rgba(186,201,204,0.3)' }}>
+            <div className="h-48 flex items-center justify-center text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>
               No authorization data yet. Create prior authorizations to see trends.
             </div>
           ) : (
@@ -166,8 +166,8 @@ export default function DashboardPage() {
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
-                <XAxis dataKey="date" tick={{ fill: 'rgba(186,201,204,0.3)', fontSize: 10, fontFamily: 'Inter' }} tickFormatter={v => v?.slice(5)} />
-                <YAxis tick={{ fill: 'rgba(186,201,204,0.3)', fontSize: 10, fontFamily: 'Inter' }} allowDecimals={false} />
+                <XAxis dataKey="date" tick={{ fill: 'rgba(255,255,255,0.6)', fontSize: 10, fontFamily: 'Inter' }} tickFormatter={v => v?.slice(5)} />
+                <YAxis tick={{ fill: 'rgba(255,255,255,0.6)', fontSize: 10, fontFamily: 'Inter' }} allowDecimals={false} />
                 <Tooltip content={customTooltip} />
                 <Area type="monotone" dataKey="submitted" stroke="#00e5ff" strokeWidth={2} fill="url(#gCyan)" name="Submitted" />
                 <Area type="monotone" dataKey="approved" stroke="#00ef7e" strokeWidth={2} fill="url(#gGreen)" name="Approved" />
@@ -199,7 +199,7 @@ export default function DashboardPage() {
                     )} />
                     <div className="min-w-0">
                       <p className="text-xs text-white/60 truncate capitalize">{session.session_type} workflow</p>
-                      <p className="text-xs text-white/25">
+                      <p className="text-xs text-white/60">
                         {session.completed_agents?.length || 0}/10 agents
                         {session.tool_calls > 0 && ` · ${session.tool_calls} calls`}
                       </p>
@@ -208,13 +208,13 @@ export default function DashboardPage() {
                   <span className={cn('text-xs flex-shrink-0 ml-2',
                     session.status === 'completed' ? 'text-emerald-400' :
                     session.status === 'running' ? 'text-cyan-400' :
-                    session.status === 'failed' ? 'text-rose-400' : 'text-white/30')}>
+                    session.status === 'failed' ? 'text-rose-400' : 'text-white/70')}>
                     {session.status}
                   </span>
                 </motion.div>
               ))
             ) : (
-              <div className="text-center py-6 text-white/20 text-xs">
+              <div className="text-center py-6 text-white/50 text-xs">
                 <p>No agent sessions yet.</p>
                 <p className="mt-1">Run a workflow from the Agent Network page.</p>
               </div>
@@ -234,9 +234,9 @@ export default function DashboardPage() {
             {Array(3).fill(0).map((_, i) => <div key={i} className="skeleton h-14 rounded-xl" />)}
           </div>
         ) : patients.length === 0 ? (
-          <div className="p-12 text-center text-white/25 text-sm">
+          <div className="p-12 text-center text-white/60 text-sm">
             <p>No patients yet. Run the seed script to add demo patients.</p>
-            <code className="text-xs mt-2 block text-white/20">python -m app.scripts.seed_data</code>
+            <code className="text-xs mt-2 block text-white/50">python -m app.scripts.seed_data</code>
           </div>
         ) : (
           <div className="overflow-x-auto">
@@ -244,7 +244,7 @@ export default function DashboardPage() {
               <thead>
                 <tr className="border-b border-white/5">
                   {['Patient', 'MRN', 'Diagnosis', 'Risk', 'Insurance', 'Actions'].map(col => (
-                    <th key={col} className="px-6 py-3 text-left text-xs font-medium text-white/30 uppercase tracking-wider">{col}</th>
+                    <th key={col} className="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">{col}</th>
                   ))}
                 </tr>
               </thead>
@@ -259,18 +259,18 @@ export default function DashboardPage() {
                         </div>
                         <div>
                           <p className="text-sm font-medium text-white/80">{patient.first_name} {patient.last_name}</p>
-                          <p className="text-xs text-white/30 capitalize">{patient.gender}</p>
+                          <p className="text-xs text-white/70 capitalize">{patient.gender}</p>
                         </div>
                       </Link>
                     </td>
-                    <td className="px-6 py-4 text-xs text-white/40 font-mono">{patient.mrn}</td>
+                    <td className="px-6 py-4 text-xs text-white/80 font-mono">{patient.mrn}</td>
                     <td className="px-6 py-4 text-xs text-white/55 max-w-48 truncate">{patient.primary_diagnosis || '—'}</td>
                     <td className="px-6 py-4">
                       <span className={cn('px-2.5 py-1 rounded-lg text-xs font-medium border', getRiskColor(patient.risk_level))}>
                         {patient.risk_level || 'low'}
                       </span>
                     </td>
-                    <td className="px-6 py-4 text-xs text-white/40">{patient.insurance_provider || '—'}</td>
+                    <td className="px-6 py-4 text-xs text-white/80">{patient.insurance_provider || '—'}</td>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-2">
                         <Link href={`/patients/${patient.id}`}

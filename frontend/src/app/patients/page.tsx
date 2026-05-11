@@ -30,11 +30,11 @@ export default function PatientsPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="font-display text-2xl font-bold text-white">Patient Registry</h1>
-          <p className="text-white/40 text-sm mt-1">FHIR-compatible patient management</p>
+          <p className="text-white/80 text-sm mt-1">FHIR-compatible patient management</p>
         </div>
         <div className="flex items-center gap-3">
           <div className="relative">
-            <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/70" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
             </svg>
             <input
@@ -80,7 +80,7 @@ export default function PatientsPage() {
                     </div>
                     <div>
                       <p className="font-semibold text-white/90">{patient.first_name} {patient.last_name}</p>
-                      <p className="text-xs text-white/30 font-mono">{patient.mrn}</p>
+                      <p className="text-xs text-white/70 font-mono">{patient.mrn}</p>
                     </div>
                   </div>
                   <span className={cn('px-2.5 py-1 rounded-lg text-xs font-medium border', getRiskColor(patient.risk_level))}>
@@ -89,22 +89,22 @@ export default function PatientsPage() {
                 </div>
                 <div className="space-y-1.5">
                   <div className="flex items-start gap-2">
-                    <span className="text-xs text-white/30 flex-shrink-0 w-20">Diagnosis</span>
+                    <span className="text-xs text-white/70 flex-shrink-0 w-20">Diagnosis</span>
                     <span className="text-xs text-white/60 leading-snug">{patient.primary_diagnosis || '—'}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-xs text-white/30 w-20">Age / Gender</span>
+                    <span className="text-xs text-white/70 w-20">Age / Gender</span>
                     <span className="text-xs text-white/60">{calculateAge(patient.date_of_birth)} yrs • {patient.gender || '—'}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-xs text-white/30 w-20">Insurance</span>
+                    <span className="text-xs text-white/70 w-20">Insurance</span>
                     <span className="text-xs text-white/60">{patient.insurance_provider || '—'}</span>
                   </div>
                 </div>
                 <div className="mt-4 flex items-center justify-between">
                   <div className="flex items-center gap-1.5">
                     <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                    <span className="text-xs text-white/30">Active</span>
+                    <span className="text-xs text-white/70">Active</span>
                   </div>
                   <span className="text-xs text-cyan-400/60 group-hover:text-cyan-400 transition-colors">
                     View profile
@@ -117,7 +117,7 @@ export default function PatientsPage() {
       </div>
 
       {!loading && patients.length === 0 && (
-        <div className="text-center py-20 text-white/30">
+        <div className="text-center py-20 text-white/70">
           <p className="text-lg">No patients found</p>
           <p className="text-sm mt-1">Run the seed script or adjust your filters</p>
         </div>

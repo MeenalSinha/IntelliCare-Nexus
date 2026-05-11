@@ -19,8 +19,8 @@
   --surface-container-highest: #1e2d4e;
   --surface-variant:        #1e2d4e;
   --on-surface:             #e2e8f0;
-  --on-surface-variant:     #94a3b8;
-  --outline:                #475569;
+  --on-surface-variant:     #cbd5e1;
+  --outline:                #94a3b8;
   --outline-variant:        #334155;
 
   /* ── Brand accents ───────────────────────────────────────── */
@@ -346,6 +346,8 @@ body {
 }
 
 /* ── Input & Form Elements ──────────────────────────────────────────────── */
+option { background: var(--surface-container-high); color: var(--on-surface); }
+
 input, select, textarea {
   font-family: var(--font-body);
   background: rgba(255,255,255,0.02);

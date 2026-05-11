@@ -12,7 +12,7 @@ const Tab = ({ label, active, onClick }: any) => (
     onClick={onClick}
     className={cn(
       'px-4 py-2.5 text-sm font-medium rounded-xl transition-all',
-      active ? 'text-cyan-300 bg-cyan-500/10 border border-cyan-500/20' : 'text-white/40 hover:text-white/60'
+      active ? 'text-cyan-300 bg-cyan-500/10 border border-cyan-500/20' : 'text-white/80 hover:text-white/60'
     )}
   >
     {label}
@@ -57,7 +57,7 @@ export default function PatientDetailPage() {
     </div>
   )
 
-  if (!patient) return <div className="p-8 text-white/40">Patient not found</div>
+  if (!patient) return <div className="p-8 text-white/80">Patient not found</div>
 
   return (
     <div className="p-8 space-y-6">
@@ -73,7 +73,7 @@ export default function PatientDetailPage() {
               {patient.first_name} {patient.last_name}
             </h1>
             <div className="flex items-center gap-3 mt-1">
-              <span className="text-xs text-white/30 font-mono">{patient.mrn}</span>
+              <span className="text-xs text-white/70 font-mono">{patient.mrn}</span>
               <span className="text-white/15">•</span>
               <span className="text-xs text-white/50">{calculateAge(patient.date_of_birth)} yrs</span>
               <span className="text-white/15">•</span>
@@ -136,11 +136,11 @@ export default function PatientDetailPage() {
             <h3 className="text-sm font-semibold text-white/70 mb-4 uppercase tracking-wide">Insurance</h3>
             <div className="space-y-3">
               <div>
-                <p className="text-xs text-white/30">Provider</p>
+                <p className="text-xs text-white/70">Provider</p>
                 <p className="text-sm text-white/80">{patient.insurance_provider || '—'}</p>
               </div>
               <div>
-                <p className="text-xs text-white/30">Policy Number</p>
+                <p className="text-xs text-white/70">Policy Number</p>
                 <p className="text-sm text-white/80 font-mono">{patient.insurance_policy_number || '—'}</p>
               </div>
             </div>
@@ -154,7 +154,7 @@ export default function PatientDetailPage() {
                 <span key={a} className="px-2.5 py-1 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-300 text-xs">
                   {a}
                 </span>
-              )) : <span className="text-xs text-white/30">NKDA</span>}
+              )) : <span className="text-xs text-white/70">NKDA</span>}
             </div>
           </div>
 
@@ -164,12 +164,12 @@ export default function PatientDetailPage() {
             <div className="grid grid-cols-3 gap-4">
               {Object.entries(patient.vital_signs || {}).map(([key, val]) => (
                 <div key={key}>
-                  <p className="text-xs text-white/30 capitalize">{key.replace('_', ' ')}</p>
+                  <p className="text-xs text-white/70 capitalize">{key.replace('_', ' ')}</p>
                   <p className="text-sm font-medium text-white/80">{String(val)}</p>
                 </div>
               ))}
               {!Object.keys(patient.vital_signs || {}).length && (
-                <p className="text-xs text-white/30">No vitals recorded</p>
+                <p className="text-xs text-white/70">No vitals recorded</p>
               )}
             </div>
           </div>
@@ -183,12 +183,12 @@ export default function PatientDetailPage() {
               className="glass-panel rounded-xl p-4 border border-white/6 flex items-center justify-between">
               <div>
                 <p className="font-medium text-white/80">{med.name}</p>
-                <p className="text-xs text-white/40 mt-0.5">{med.dose} • {med.frequency} • {med.route}</p>
+                <p className="text-xs text-white/80 mt-0.5">{med.dose} • {med.frequency} • {med.route}</p>
               </div>
               <span className="px-3 py-1 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-xs">Active</span>
             </motion.div>
           ))}
-          {!(patient.medications?.length) && <p className="text-white/30 text-sm">No medications recorded</p>}
+          {!(patient.medications?.length) && <p className="text-white/70 text-sm">No medications recorded</p>}
         </div>
       )}
 
@@ -203,11 +203,11 @@ export default function PatientDetailPage() {
               </div>
               <div className="text-right">
                 <p className="text-lg font-bold text-cyan-300">{lab.value}</p>
-                <p className="text-xs text-white/30">{lab.date}</p>
+                <p className="text-xs text-white/70">{lab.date}</p>
               </div>
             </motion.div>
           ))}
-          {!(patient.lab_results?.length) && <p className="text-white/30 text-sm">No lab results recorded</p>}
+          {!(patient.lab_results?.length) && <p className="text-white/70 text-sm">No lab results recorded</p>}
         </div>
       )}
 
@@ -215,11 +215,11 @@ export default function PatientDetailPage() {
         <div className="grid grid-cols-2 gap-4">
           {Object.entries(patient.genomics || {}).map(([gene, value]) => (
             <div key={gene} className="glass-panel rounded-xl p-4 border border-white/6">
-              <p className="text-xs text-white/40 font-mono uppercase tracking-wider mb-1">{gene}</p>
+              <p className="text-xs text-white/80 font-mono uppercase tracking-wider mb-1">{gene}</p>
               <p className="text-sm text-violet-300">{String(value)}</p>
             </div>
           ))}
-          {!Object.keys(patient.genomics || {}).length && <p className="text-white/30 text-sm col-span-2">No genomic data available</p>}
+          {!Object.keys(patient.genomics || {}).length && <p className="text-white/70 text-sm col-span-2">No genomic data available</p>}
         </div>
       )}
 
@@ -235,12 +235,12 @@ export default function PatientDetailPage() {
                     <p className="font-medium text-white/80">{proc.name}</p>
                     {proc.result && <p className="text-xs text-white/50 mt-1">{proc.result}</p>}
                   </div>
-                  <p className="text-xs text-white/30 flex-shrink-0 ml-4">{proc.date || 'Pending'}</p>
+                  <p className="text-xs text-white/70 flex-shrink-0 ml-4">{proc.date || 'Pending'}</p>
                 </div>
               </div>
             </div>
           ))}
-          {!(patient.procedures?.length) && <p className="text-white/30 text-sm">No procedures recorded</p>}
+          {!(patient.procedures?.length) && <p className="text-white/70 text-sm">No procedures recorded</p>}
         </div>
       )}
     </div>

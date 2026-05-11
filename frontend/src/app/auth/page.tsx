@@ -62,7 +62,7 @@ export default function AuthPage() {
             </svg>
           </motion.div>
           <h1 className="font-display text-2xl font-bold text-white mb-1">IntelliCare Nexus</h1>
-          <p className="text-sm text-white/40">Autonomous Clinical Decision Platform</p>
+          <p className="text-sm text-white/80">Autonomous Clinical Decision Platform</p>
         </div>
 
         {/* Form */}
@@ -126,7 +126,7 @@ export default function AuthPage() {
           </div>
         </div>
 
-        <p className="text-center text-xs text-white/25 mt-6">
+        <p className="text-center text-xs text-white/60 mt-6">
           HIPAA-compliant. All demo data is synthetic.
         </p>
       </motion.div>

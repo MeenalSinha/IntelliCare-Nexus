@@ -37,7 +37,7 @@ export function getRiskColor(level: string): string {
     case 'high': return 'text-orange-400 border-orange-400/30 bg-orange-400/10'
     case 'medium': return 'text-amber-400 border-amber-400/30 bg-amber-400/10'
     case 'low': return 'text-emerald-400 border-emerald-400/30 bg-emerald-400/10'
-    default: return 'text-slate-400 border-slate-400/30 bg-slate-400/10'
+    default: return 'text-slate-200 border-slate-400/30 bg-slate-400/10'
   }
 }
 

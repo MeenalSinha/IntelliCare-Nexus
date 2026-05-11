@@ -58,7 +58,7 @@ export default function AuditPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="font-display text-2xl font-bold text-white">Audit and Compliance</h1>
-          <p className="text-white/40 text-sm mt-1">HIPAA-aligned audit trail and compliance monitoring</p>
+          <p className="text-white/80 text-sm mt-1">HIPAA-aligned audit trail and compliance monitoring</p>
         </div>
         <div className="flex items-center gap-2">
           {!loading && (
@@ -81,7 +81,7 @@ export default function AuditPage() {
           { label: 'HIPAA Controls', value: loading ? '—' : `${compliantCount}/${hipaaControls.length}`, color: '#a855f7' },
         ].map(stat => (
           <div key={stat.label} className="glass-panel rounded-2xl p-4 border" style={{ borderColor: `${stat.color}15` }}>
-            <p className="text-xs text-white/40 mb-2">{stat.label}</p>
+            <p className="text-xs text-white/80 mb-2">{stat.label}</p>
             <p className="text-2xl font-display font-bold" style={{ color: stat.color }}>{stat.value}</p>
           </div>
         ))}
@@ -92,7 +92,7 @@ export default function AuditPage() {
         {(['logs', 'hipaa', 'agents'] as const).map(section => (
           <button key={section} onClick={() => setActiveSection(section)}
             className={cn('px-5 py-2.5 text-sm font-medium border-b-2 transition-all',
-              activeSection === section ? 'border-cyan-400 text-cyan-300' : 'border-transparent text-white/40 hover:text-white/60')}>
+              activeSection === section ? 'border-cyan-400 text-cyan-300' : 'border-transparent text-white/80 hover:text-white/60')}>
             {section === 'hipaa' ? 'HIPAA Controls' : section === 'agents' ? 'Agent Audit' : 'Audit Log'}
           </button>
         ))}
@@ -102,7 +102,7 @@ export default function AuditPage() {
       {errorMsg && (
         <div className="p-4 rounded-xl border border-amber-500/20 bg-amber-500/5">
           <p className="text-sm text-amber-400">{errorMsg}</p>
-          <p className="text-xs text-white/30 mt-1">Ensure the backend is running and the database is seeded.</p>
+          <p className="text-xs text-white/70 mt-1">Ensure the backend is running and the database is seeded.</p>
         </div>
       )}
 
@@ -112,13 +112,13 @@ export default function AuditPage() {
           <div className="flex-1 glass-panel rounded-2xl border border-white/6 overflow-hidden">
             <div className="px-5 py-3 border-b border-white/6 flex items-center justify-between">
               <span className="text-xs text-white/50 font-medium uppercase tracking-wide">Audit Events</span>
-              <span className="text-xs text-white/30">{logs.length} total</span>
+              <span className="text-xs text-white/70">{logs.length} total</span>
             </div>
             <div className="overflow-y-auto" style={{ maxHeight: '480px' }}>
               {loading ? (
                 Array(8).fill(0).map((_, i) => <div key={i} className="mx-4 my-2 skeleton h-14 rounded-xl" />)
               ) : logs.length === 0 ? (
-                <div className="text-center py-16 text-white/25 text-sm">
+                <div className="text-center py-16 text-white/60 text-sm">
                   <p>No audit events yet.</p>
                   <p className="text-xs mt-1">Run an agent workflow to generate audit logs.</p>
                 </div>
@@ -137,9 +137,9 @@ export default function AuditPage() {
                         <span className="px-1.5 py-0.5 rounded text-xs bg-amber-400/10 text-amber-400 border border-amber-400/20">PHI</span>
                       )}
                     </div>
-                    <p className="text-xs text-white/30 mt-0.5 truncate">{log.agent_name || 'System'}</p>
+                    <p className="text-xs text-white/70 mt-0.5 truncate">{log.agent_name || 'System'}</p>
                   </div>
-                  <span className="text-xs text-white/25 flex-shrink-0">
+                  <span className="text-xs text-white/60 flex-shrink-0">
                     {new Date(log.created_at).toLocaleTimeString()}
                   </span>
                 </motion.div>
@@ -161,14 +161,14 @@ export default function AuditPage() {
                   { label: 'Timestamp', value: formatDateTime(selectedLog.created_at) },
                 ].map(({ label, value }) => (
                   <div key={label}>
-                    <p className="text-xs text-white/30 mb-0.5">{label}</p>
+                    <p className="text-xs text-white/70 mb-0.5">{label}</p>
                     <p className="text-sm text-white/70">{value}</p>
                   </div>
                 ))}
               </div>
               {selectedLog.details && Object.keys(selectedLog.details).length > 0 && (
                 <div>
-                  <p className="text-xs text-white/30 mb-2">Details</p>
+                  <p className="text-xs text-white/70 mb-2">Details</p>
                   <pre className="text-xs text-white/45 bg-white/4 rounded-xl p-3 overflow-auto max-h-32 font-mono">
                     {JSON.stringify(selectedLog.details, null, 2)}
                   </pre>
@@ -185,7 +185,7 @@ export default function AuditPage() {
           {loading ? (
             Array(6).fill(0).map((_, i) => <div key={i} className="skeleton h-16 rounded-xl" />)
           ) : hipaaControls.length === 0 ? (
-            <p className="text-white/30 text-sm">HIPAA status unavailable — backend may be offline.</p>
+            <p className="text-white/70 text-sm">HIPAA status unavailable — backend may be offline.</p>
           ) : hipaaControls.map((ctrl, i) => (
             <motion.div key={ctrl.control} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }}
               transition={{ delay: i * 0.04 }}
@@ -205,7 +205,7 @@ export default function AuditPage() {
               </div>
               <div className="flex-1">
                 <p className="text-sm font-medium text-white/80">{ctrl.control}</p>
-                <p className="text-xs text-white/40 mt-0.5">{ctrl.detail}</p>
+                <p className="text-xs text-white/80 mt-0.5">{ctrl.detail}</p>
               </div>
               <span className={cn('px-2.5 py-1 rounded-lg text-xs font-medium flex-shrink-0',
                 ctrl.status === 'compliant' ? 'status-approved' : 'status-pending')}>
@@ -221,12 +221,12 @@ export default function AuditPage() {
         <div className="glass-panel rounded-2xl border border-white/6 overflow-hidden">
           <div className="px-6 py-4 border-b border-white/6">
             <h3 className="text-sm font-semibold text-white">Agent Activity Summary</h3>
-            <p className="text-xs text-white/30 mt-0.5">Aggregated from {agentSessions.length} agent sessions</p>
+            <p className="text-xs text-white/70 mt-0.5">Aggregated from {agentSessions.length} agent sessions</p>
           </div>
           {loading ? (
             <div className="p-6 space-y-3">{Array(5).fill(0).map((_, i) => <div key={i} className="skeleton h-12 rounded-xl" />)}</div>
           ) : Object.keys(agentAggregates).length === 0 ? (
-            <div className="p-12 text-center text-white/25 text-sm">
+            <div className="p-12 text-center text-white/60 text-sm">
               No agent activity yet. Run a workflow from the Agent Network page.
             </div>
           ) : (
@@ -234,7 +234,7 @@ export default function AuditPage() {
               <thead>
                 <tr className="border-b border-white/5">
                   {['Agent', 'Total Invocations', 'Completions', 'Status'].map(h => (
-                    <th key={h} className="px-6 py-3 text-left text-xs font-medium text-white/30 uppercase tracking-wider">{h}</th>
+                    <th key={h} className="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">{h}</th>
                   ))}
                 </tr>
               </thead>

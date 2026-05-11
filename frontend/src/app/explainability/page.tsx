@@ -95,7 +95,7 @@ function ExplainabilityPageInner() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="font-display text-2xl font-bold text-white">Explainability Timeline</h1>
-          <p className="text-white/40 text-sm mt-1">Complete reasoning chain for every agent decision</p>
+          <p className="text-white/80 text-sm mt-1">Complete reasoning chain for every agent decision</p>
         </div>
       </div>
 
@@ -103,7 +103,7 @@ function ExplainabilityPageInner() {
       <div className="glass-panel rounded-2xl p-5 border border-white/6">
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="text-xs text-white/40 mb-1.5 block">Patient (optional)</label>
+            <label className="text-xs text-white/80 mb-1.5 block">Patient (optional)</label>
             <select value={selectedPatient} onChange={e => setSelectedPatient(e.target.value)}
               className="w-full px-3 py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm text-white/70">
               <option value="">All patients</option>
@@ -113,7 +113,7 @@ function ExplainabilityPageInner() {
             </select>
           </div>
           <div>
-            <label className="text-xs text-white/40 mb-1.5 block">Session ID</label>
+            <label className="text-xs text-white/80 mb-1.5 block">Session ID</label>
             <div className="flex gap-2">
               <input
                 value={sessionId || ''}
@@ -142,7 +142,7 @@ function ExplainabilityPageInner() {
             { label: 'Total Events', value: allEvents.length, color: '#a855f7' },
           ].map(s => (
             <div key={s.label} className="glass-panel rounded-xl p-4 border" style={{ borderColor: `${s.color}15` }}>
-              <p className="text-xs text-white/40 mb-1">{s.label}</p>
+              <p className="text-xs text-white/80 mb-1">{s.label}</p>
               <p className="text-2xl font-display font-bold" style={{ color: s.color }}>{s.value}</p>
             </div>
           ))}
@@ -169,7 +169,7 @@ function ExplainabilityPageInner() {
                     <div className={cn('w-1.5 h-1.5 rounded-full flex-shrink-0',
                       done ? 'bg-emerald-400' : uniqueAgents.includes(agent) ? 'bg-amber-400' : 'bg-white/20'
                     )} />
-                    <span className={done ? 'text-white/60' : 'text-white/25'}
+                    <span className={done ? 'text-white/60' : 'text-white/60'}
                       style={{ color: filterAgent === agent ? AGENT_COLORS[agent] : undefined }}>
                       {agent.replace('Agent', '').replace(/([A-Z])/g, ' $1').trim()}
                     </span>
@@ -180,12 +180,12 @@ function ExplainabilityPageInner() {
           </div>
 
           <div className="glass-panel rounded-2xl p-4 border border-white/6">
-            <h3 className="text-xs font-semibold text-white/40 mb-3 uppercase tracking-wider">Event Type</h3>
+            <h3 className="text-xs font-semibold text-white/80 mb-3 uppercase tracking-wider">Event Type</h3>
             <div className="space-y-1">
               {['all', 'started', 'completed', 'tool_call', 'tool_result', 'processing', 'audit', 'failed'].map(type => (
                 <button key={type} onClick={() => setFilterType(type)}
                   className={cn('w-full px-3 py-1.5 rounded-lg text-xs text-left transition-all capitalize',
-                    filterType === type ? 'bg-cyan-500/15 text-cyan-300' : 'text-white/30 hover:text-white/50')}>
+                    filterType === type ? 'bg-cyan-500/15 text-cyan-300' : 'text-white/70 hover:text-white/50')}>
                   {EVENT_ICONS[type] || ''} {type === 'all' ? 'All Types' : type.replace('_', ' ')}
                 </button>
               ))}
@@ -202,13 +202,13 @@ function ExplainabilityPageInner() {
           {!loading && notFoundMessage && (
             <div className="glass-panel rounded-2xl p-8 border border-amber-500/20 text-center">
               <p className="text-amber-400/80 text-sm mb-2">Session Not Found</p>
-              <p className="text-white/40 text-xs">{notFoundMessage}</p>
-              <p className="text-white/25 text-xs mt-2">Session states expire after 1 hour. Run a new workflow to generate a fresh session.</p>
+              <p className="text-white/80 text-xs">{notFoundMessage}</p>
+              <p className="text-white/60 text-xs mt-2">Session states expire after 1 hour. Run a new workflow to generate a fresh session.</p>
             </div>
           )}
 
           {!loading && !sessionState && !notFoundMessage && (
-            <div className="flex items-center justify-center h-64 text-white/25 text-sm">
+            <div className="flex items-center justify-center h-64 text-white/60 text-sm">
               Enter a session ID from a completed agent workflow
             </div>
           )}
@@ -248,25 +248,25 @@ function ExplainabilityPageInner() {
                                 isCompleted ? 'bg-emerald-500/15 text-emerald-400' :
                                 isFailed ? 'bg-rose-500/15 text-rose-400' :
                                 isToolCall ? 'bg-cyan-500/15 text-cyan-400' :
-                                'bg-white/8 text-white/40')}>
+                                'bg-white/8 text-white/80')}>
                                 {icon} {event.event_type?.replace('_', ' ')}
                               </span>
                               {event.data?.tool && (
-                                <span className="text-xs text-white/30 font-mono">{event.data.tool}</span>
+                                <span className="text-xs text-white/70 font-mono">{event.data.tool}</span>
                               )}
                             </div>
                             <p className="text-sm text-white/65 leading-snug">{event.message}</p>
                             {event.data && !event.data.tool && Object.keys(event.data).length > 0 && (
                               <div className="mt-1.5 flex flex-wrap gap-1">
                                 {Object.entries(event.data).slice(0, 3).map(([k, v]: any) => (
-                                  <span key={k} className="px-2 py-0.5 rounded bg-white/4 text-xs text-white/30">
-                                    <span className="text-white/20">{k}:</span> {String(v)?.slice(0, 25)}
+                                  <span key={k} className="px-2 py-0.5 rounded bg-white/4 text-xs text-white/70">
+                                    <span className="text-white/50">{k}:</span> {String(v)?.slice(0, 25)}
                                   </span>
                                 ))}
                               </div>
                             )}
                           </div>
-                          <span className="text-xs text-white/20 flex-shrink-0 font-mono">
+                          <span className="text-xs text-white/50 flex-shrink-0 font-mono">
                             {event.timestamp ? new Date(event.timestamp).toLocaleTimeString() : ''}
                           </span>
                         </div>
@@ -275,7 +275,7 @@ function ExplainabilityPageInner() {
                   })}
                 </AnimatePresence>
                 {filteredEvents.length === 0 && (
-                  <div className="text-center py-12 text-white/30 text-sm">No events match the current filters</div>
+                  <div className="text-center py-12 text-white/70 text-sm">No events match the current filters</div>
                 )}
               </div>
             </div>
@@ -289,7 +289,7 @@ function ExplainabilityPageInner() {
 export default function ExplainabilityPage() {
   return (
     <Suspense fallback={
-      <div className="flex items-center justify-center h-screen bg-void text-white/30 text-sm">
+      <div className="flex items-center justify-center h-screen bg-void text-white/70 text-sm">
         Loading timeline...
       </div>
     }>

@@ -134,10 +134,10 @@ export default function DemoMode({ onClose }: DemoModeProps) {
                 DEMO MODE
               </span>
             </div>
-            <p className="text-white/40 text-sm">Lung Cancer Patient — Full Autonomous Workflow</p>
+            <p className="text-white/80 text-sm">Lung Cancer Patient — Full Autonomous Workflow</p>
           </div>
           <button onClick={onClose}
-            className="text-white/30 hover:text-white/60 transition-colors text-sm">
+            className="text-white/70 hover:text-white/60 transition-colors text-sm">
             Close
           </button>
         </div>
@@ -159,7 +159,7 @@ export default function DemoMode({ onClose }: DemoModeProps) {
               58-year-old male with non-small cell lung cancer. KRAS G12C mutation, PD-L1 85%.
               Needs MRI authorization, immunotherapy approval, and clinical trial evaluation.
             </p>
-            <p className="text-xs text-white/30 mb-8">
+            <p className="text-xs text-white/70 mb-8">
               10 AI agents will autonomously process this case in real time using Gemini 2.5
             </p>
             <div className="flex items-center justify-center gap-4">
@@ -226,9 +226,9 @@ export default function DemoMode({ onClose }: DemoModeProps) {
               })}
             </div>
 
-            <div className="flex justify-between text-xs text-white/30">
+            <div className="flex justify-between text-xs text-white/70">
               <span>Step {currentStep + 1} of {DEMO_SCRIPT.length}</span>
-              <button onClick={stopDemo} className="text-white/25 hover:text-white/50 transition-colors">Stop</button>
+              <button onClick={stopDemo} className="text-white/60 hover:text-white/50 transition-colors">Stop</button>
             </div>
           </div>
         )}
@@ -260,7 +260,7 @@ export default function DemoMode({ onClose }: DemoModeProps) {
                   <div key={s.label} className="rounded-xl p-4 border"
                     style={{ borderColor: `${s.color}20`, background: `${s.color}08` }}>
                     <p className="text-2xl font-display font-bold" style={{ color: s.color }}>{s.value}</p>
-                    <p className="text-xs text-white/40 mt-1">{s.label}</p>
+                    <p className="text-xs text-white/80 mt-1">{s.label}</p>
                   </div>
                 ))}
               </div>
@@ -275,7 +275,7 @@ export default function DemoMode({ onClose }: DemoModeProps) {
                   Run Again
                 </button>
                 <button onClick={onClose}
-                  className="px-6 py-2.5 rounded-xl text-sm font-semibold text-white/40 hover:text-white/60 transition-colors">
+                  className="px-6 py-2.5 rounded-xl text-sm font-semibold text-white/80 hover:text-white/60 transition-colors">
                   Close
                 </button>
               </div>

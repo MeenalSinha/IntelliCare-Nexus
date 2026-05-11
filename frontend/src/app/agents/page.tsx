@@ -50,7 +50,7 @@ const AgentNode = ({ data }: { data: any }) => {
         <span className="text-xs font-semibold text-white/90 truncate">{data.label}</span>
         {isDone && <span className="ml-auto text-emerald-400 text-xs">✓</span>}
       </div>
-      <p className="text-xs text-white/40 truncate max-w-36 leading-snug">{data.message || data.status}</p>
+      <p className="text-xs text-white/80 truncate max-w-36 leading-snug">{data.message || data.status}</p>
       {data.toolCalls != null && data.toolCalls > 0 && (
         <p className="text-xs text-cyan-400/40 font-mono mt-1">{data.toolCalls} tool calls</p>
       )}
@@ -240,11 +240,11 @@ function AgentsPageInner() {
         <div className="p-5 border-b border-white/6 space-y-4">
           <div>
             <h2 className="font-display font-bold text-white text-base">Agent Orchestration</h2>
-            <p className="text-xs text-white/40 mt-0.5">LangGraph multi-agent live visualization</p>
+            <p className="text-xs text-white/80 mt-0.5">LangGraph multi-agent live visualization</p>
           </div>
 
           <div>
-            <label className="text-xs text-white/40 mb-1.5 block">Patient</label>
+            <label className="text-xs text-white/80 mb-1.5 block">Patient</label>
             <select value={selectedPatient} onChange={e => setSelectedPatient(e.target.value)}
               disabled={workflowStatus === 'running'}
               className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-sm text-white/70 focus:outline-none focus:border-cyan-500/40">
@@ -269,7 +269,7 @@ function AgentsPageInner() {
 
           {workflowStatus !== 'idle' && (
             <div className="space-y-2">
-              <div className="flex justify-between text-xs text-white/40">
+              <div className="flex justify-between text-xs text-white/80">
                 <span>{completedCount}/10 agents</span>
                 <span className="capitalize font-medium" style={{
                   color: workflowStatus === 'completed' ? '#00ff87' : workflowStatus === 'failed' ? '#f43f5e' : '#00f5ff'
@@ -281,7 +281,7 @@ function AgentsPageInner() {
                   animate={{ width: `${(completedCount / 10) * 100}%` }}
                   transition={{ duration: 0.5 }} />
               </div>
-              <div className="flex items-center justify-between text-xs text-white/30">
+              <div className="flex items-center justify-between text-xs text-white/70">
                 <span>{toolCallCount} MCP tool calls</span>
                 {sessionId && <span className="font-mono">{sessionId.slice(0, 8)}...</span>}
               </div>
@@ -291,7 +291,7 @@ function AgentsPageInner() {
 
         {/* Events */}
         <div className="flex-1 overflow-y-auto p-3 space-y-1.5">
-          <p className="text-xs text-white/25 px-2 py-1 uppercase tracking-wider">Live Event Stream</p>
+          <p className="text-xs text-white/60 px-2 py-1 uppercase tracking-wider">Live Event Stream</p>
           <AnimatePresence initial={false}>
             {events.map((event, i) => (
               <motion.div key={i} initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }}
@@ -322,7 +322,7 @@ function AgentsPageInner() {
             ))}
           </AnimatePresence>
           {events.length === 0 && (
-            <p className="text-center text-white/20 text-xs py-8">Start a workflow to see live events</p>
+            <p className="text-center text-white/50 text-xs py-8">Start a workflow to see live events</p>
           )}
           <div ref={eventsEndRef} />
         </div>
@@ -349,7 +349,7 @@ function AgentsPageInner() {
                 </span>
               </>
             ) : (
-              <span className="text-xs text-white/30">Select a patient and start the workflow</span>
+              <span className="text-xs text-white/70">Select a patient and start the workflow</span>
             )}
           </div>
           {workflowStatus === 'completed' && (
@@ -391,7 +391,7 @@ function AgentsPageInner() {
 export default function AgentsPage() {
   return (
     <Suspense fallback={
-      <div className="flex items-center justify-center h-screen bg-void text-white/30 text-sm">
+      <div className="flex items-center justify-center h-screen bg-void text-white/70 text-sm">
         Loading agent network...
       </div>
     }>

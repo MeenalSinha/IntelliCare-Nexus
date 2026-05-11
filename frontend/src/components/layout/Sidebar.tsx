@@ -120,7 +120,7 @@ export default function Sidebar() {
               <div key={group}>
                 {/* Stitch: label-caps style */}
                 <p className="px-3 mb-1.5 text-[10px] font-display font-semibold uppercase tracking-widest"
-                  style={{ color: 'rgba(186,201,204,0.4)' }}>
+                  style={{ color: 'rgba(255,255,255,0.7)' }}>
                   {GROUP_LABELS[group]}
                 </p>
                 <div className="space-y-0.5">
@@ -135,7 +135,7 @@ export default function Sidebar() {
                             'nav-item flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-[13px] font-medium',
                             isActive
                               ? 'active'
-                              : 'text-slate-400 hover:text-slate-200'
+                              : 'text-slate-200 hover:text-slate-200'
                           )}
                         >
                           <span className={cn('flex-shrink-0 transition-colors', isActive ? 'text-cyan-400' : 'opacity-60')}>
@@ -187,7 +187,7 @@ export default function Sidebar() {
               <p className="text-[13px] font-medium truncate" style={{ color: 'rgba(219,226,247,0.85)' }}>
                 {user?.full_name || 'Dr. Sophia Chen'}
               </p>
-              <p className="text-[11px] capitalize" style={{ color: 'rgba(186,201,204,0.45)' }}>
+              <p className="text-[11px] capitalize" style={{ color: 'rgba(255,255,255,0.7)' }}>
                 {user?.role || 'Physician'}
               </p>
             </div>

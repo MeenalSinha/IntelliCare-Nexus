@@ -27,7 +27,7 @@ export default function HomePage() {
           </div>
           <div>
             <span className="font-display font-bold text-white">IntelliCare Nexus</span>
-            <span className="ml-2 text-xs text-white/30">v1.0</span>
+            <span className="ml-2 text-xs text-white/70">v1.0</span>
           </div>
         </div>
         <Link href="/auth">
@@ -139,7 +139,7 @@ export default function HomePage() {
               className="glass-panel rounded-2xl p-6 border"
               style={{ borderColor: `${feature.color}18` }}
             >
-              <div className="text-xs font-mono text-white/20 mb-4">{feature.icon}</div>
+              <div className="text-xs font-mono text-white/50 mb-4">{feature.icon}</div>
               <h3 className="font-display font-semibold text-white mb-2" style={{ color: feature.color }}>
                 {feature.title}
               </h3>
@@ -151,7 +151,7 @@ export default function HomePage() {
 
       {/* Tech stack strip */}
       <section className="relative z-10 border-t border-white/6 py-8">
-        <div className="flex items-center justify-center gap-8 text-xs text-white/25">
+        <div className="flex items-center justify-center gap-8 text-xs text-white/60">
           {['Google Gemini 2.5', 'LangGraph', 'FHIR R4', 'FastAPI', 'Next.js 15', 'React Flow', 'PostgreSQL', 'Redis', 'ChromaDB'].map(tech => (
             <span key={tech}>{tech}</span>
           ))}

@@ -210,26 +210,26 @@ export default function PriorAuthPage() {
               className={cn('p-4 rounded-xl cursor-pointer border transition-all',
                 selected?.id === auth.id ? 'border-cyan-500/30 bg-cyan-500/8' : 'border-white/6 bg-white/2 hover:bg-white/4')}>
               <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-mono text-white/40">{auth.reference_number}</span>
+                <span className="text-xs font-mono text-white/80">{auth.reference_number}</span>
                 <span className={cn('px-2 py-0.5 rounded-md text-xs', STATUS_STYLES[auth.status] || 'status-pending')}>
                   {STATUS_LABELS[auth.status] || auth.status}
                 </span>
               </div>
               <p className="text-sm font-medium text-white/80 mb-1 line-clamp-2">{auth.procedure_name}</p>
-              <p className="text-xs text-white/40">{auth.payer_name}</p>
+              <p className="text-xs text-white/80">{auth.payer_name}</p>
               {(auth.approval_probability || 0) > 0 && (
                 <div className="mt-2 flex items-center gap-2">
                   <div className="flex-1 h-1.5 rounded-full bg-white/8 overflow-hidden">
                     <div className="h-full rounded-full approval-meter-fill"
                       style={{ width: `${auth.approval_probability * 100}%` }} />
                   </div>
-                  <span className="text-xs text-white/30">{Math.round(auth.approval_probability * 100)}%</span>
+                  <span className="text-xs text-white/70">{Math.round(auth.approval_probability * 100)}%</span>
                 </div>
               )}
             </motion.div>
           ))}
           {!loading && auths.length === 0 && (
-            <div className="text-center py-12 text-white/25 text-xs space-y-2">
+            <div className="text-center py-12 text-white/60 text-xs space-y-2">
               <p>No authorizations yet.</p>
               <p>Click the + button to create one.</p>
             </div>
@@ -246,12 +246,12 @@ export default function PriorAuthPage() {
               <div>
                 <h1 className="font-display text-xl font-bold text-white mb-2">{selected.procedure_name}</h1>
                 <div className="flex items-center gap-3 flex-wrap">
-                  <span className="text-xs font-mono text-white/40">{selected.reference_number}</span>
+                  <span className="text-xs font-mono text-white/80">{selected.reference_number}</span>
                   <span className={cn('px-2.5 py-1 rounded-lg text-xs font-medium', STATUS_STYLES[selected.status] || 'status-pending')}>
                     {STATUS_LABELS[selected.status] || selected.status}
                   </span>
-                  <span className="text-xs text-white/40">{selected.payer_name}</span>
-                  <span className="text-xs text-white/30">{selected.urgency} priority</span>
+                  <span className="text-xs text-white/80">{selected.payer_name}</span>
+                  <span className="text-xs text-white/70">{selected.urgency} priority</span>
                 </div>
               </div>
               <div className="flex items-center gap-2 flex-wrap justify-end">
@@ -282,7 +282,7 @@ export default function PriorAuthPage() {
                   </button>
                 )}
                 <button onClick={() => refreshSelected(selected.id)}
-                  className="px-3 py-2 rounded-xl text-xs text-white/40 border border-white/10 hover:bg-white/5 transition-all">
+                  className="px-3 py-2 rounded-xl text-xs text-white/80 border border-white/10 hover:bg-white/5 transition-all">
                   Refresh
                 </button>
               </div>
@@ -294,7 +294,7 @@ export default function PriorAuthPage() {
                 <div className="flex items-center justify-between mb-4">
                   <div>
                     <h3 className="text-sm font-semibold text-white/70 uppercase tracking-wide">AI Approval Prediction</h3>
-                    <p className="text-xs text-white/30 mt-0.5">Based on clinical evidence alignment with payer criteria</p>
+                    <p className="text-xs text-white/70 mt-0.5">Based on clinical evidence alignment with payer criteria</p>
                   </div>
                   <span className="text-4xl font-display font-bold" style={{ color: probColor, textShadow: `0 0 20px ${probColor}40` }}>
                     {probPct}%
@@ -305,7 +305,7 @@ export default function PriorAuthPage() {
                     transition={{ duration: 1.2, ease: 'easeOut' }}
                     className="h-full rounded-full approval-meter-fill" />
                 </div>
-                <div className="flex justify-between mt-2 text-xs text-white/30">
+                <div className="flex justify-between mt-2 text-xs text-white/70">
                   <span>Low probability</span>
                   <span>
                     {probPct >= 75 ? 'Recommend: Submit immediately' :
@@ -327,7 +327,7 @@ export default function PriorAuthPage() {
               ].map(tab => (
                 <button key={tab.key} onClick={() => setActiveTab(tab.key as any)}
                   className={cn('px-4 py-2.5 text-sm font-medium border-b-2 transition-all -mb-px flex items-center gap-1.5',
-                    activeTab === tab.key ? 'border-cyan-400 text-cyan-300' : 'border-transparent text-white/40 hover:text-white/60')}>
+                    activeTab === tab.key ? 'border-cyan-400 text-cyan-300' : 'border-transparent text-white/80 hover:text-white/60')}>
                   {tab.label}
                   {tab.badge && (
                     <span className="w-4 h-4 rounded-full bg-violet-500/40 text-violet-300 text-xs flex items-center justify-center">
@@ -347,7 +347,7 @@ export default function PriorAuthPage() {
                     {selected.necessity_letter ? (
                       <>
                         <div className="flex items-center justify-between mb-4">
-                          <p className="text-xs text-white/40">AI-generated by MedicalNecessityAgent using Gemini 2.5</p>
+                          <p className="text-xs text-white/80">AI-generated by MedicalNecessityAgent using Gemini 2.5</p>
                           <button onClick={() => navigator.clipboard?.writeText(selected.necessity_letter || '')}
                             className="text-xs text-cyan-400/60 hover:text-cyan-400 transition-colors px-3 py-1 rounded-lg border border-cyan-500/20 hover:border-cyan-500/40">
                             Copy
@@ -360,14 +360,14 @@ export default function PriorAuthPage() {
                         </div>
                       </>
                     ) : (
-                      <div className="text-center py-12 text-white/30">
+                      <div className="text-center py-12 text-white/70">
                         <div className="w-10 h-10 rounded-xl border border-white/10 flex items-center justify-center mx-auto mb-3">
                           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12"/><polyline points="14,2 14,8 20,8"/>
                           </svg>
                         </div>
                         <p className="text-sm">Necessity letter generating...</p>
-                        <p className="text-xs text-white/20 mt-1">MedicalNecessityAgent is drafting your letter. Click Refresh in a few seconds.</p>
+                        <p className="text-xs text-white/50 mt-1">MedicalNecessityAgent is drafting your letter. Click Refresh in a few seconds.</p>
                       </div>
                     )}
                   </div>
@@ -389,7 +389,7 @@ export default function PriorAuthPage() {
                         </div>
                       ))
                     ) : (
-                      <div className="glass-panel rounded-2xl p-8 border border-white/6 text-center text-white/30 text-sm">
+                      <div className="glass-panel rounded-2xl p-8 border border-white/6 text-center text-white/70 text-sm">
                         Evidence mapping will appear after the necessity letter is generated.
                       </div>
                     )}
@@ -409,7 +409,7 @@ export default function PriorAuthPage() {
                     {selected.ai_reasoning ? (
                       <p className="text-sm text-white/65 leading-relaxed">{selected.ai_reasoning}</p>
                     ) : (
-                      <p className="text-white/30 text-sm">Reasoning will appear after AI letter generation completes.</p>
+                      <p className="text-white/70 text-sm">Reasoning will appear after AI letter generation completes.</p>
                     )}
                   </div>
                 )}
@@ -439,7 +439,7 @@ export default function PriorAuthPage() {
                       </div>
                     ) : selected.status === 'denied' ? (
                       <div className="glass-panel rounded-2xl p-8 border border-white/6 text-center">
-                        <p className="text-white/40 text-sm mb-4">Authorization was denied. Generate an AI appeal letter.</p>
+                        <p className="text-white/80 text-sm mb-4">Authorization was denied. Generate an AI appeal letter.</p>
                         <button onClick={() => generateAppeal(selected.id)} disabled={actionLoading}
                           className="px-6 py-2.5 rounded-xl text-sm font-semibold text-white"
                           style={{ background: 'linear-gradient(135deg, #a855f7, #8b5cf6)' }}>
@@ -447,7 +447,7 @@ export default function PriorAuthPage() {
                         </button>
                       </div>
                     ) : (
-                      <div className="glass-panel rounded-2xl p-8 border border-white/6 text-center text-white/25 text-sm">
+                      <div className="glass-panel rounded-2xl p-8 border border-white/6 text-center text-white/60 text-sm">
                         Appeals are generated when an authorization is denied.
                       </div>
                     )}
@@ -457,7 +457,7 @@ export default function PriorAuthPage() {
             </AnimatePresence>
           </div>
         ) : (
-          <div className="flex flex-col items-center justify-center h-full text-white/25 space-y-3">
+          <div className="flex flex-col items-center justify-center h-full text-white/60 space-y-3">
             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.4">
               <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
               <polyline points="14,2 14,8 20,8"/>
@@ -481,10 +481,10 @@ export default function PriorAuthPage() {
               <div className="flex items-center justify-between mb-6">
                 <div>
                   <h2 className="font-display text-xl font-bold text-white">New Prior Authorization</h2>
-                  <p className="text-white/40 text-sm mt-0.5">AI will generate the necessity letter automatically</p>
+                  <p className="text-white/80 text-sm mt-0.5">AI will generate the necessity letter automatically</p>
                 </div>
                 <button onClick={() => setShowCreateModal(false)}
-                  className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center text-white/40 hover:text-white/70 transition-all">
+                  className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center text-white/80 hover:text-white/70 transition-all">
                   ✕
                 </button>
               </div>
@@ -512,7 +512,7 @@ export default function PriorAuthPage() {
                           createForm.procedure_code === preset.code
                             ? 'border-cyan-500/40 bg-cyan-500/10 text-cyan-300'
                             : 'border-white/8 bg-white/3 text-white/50 hover:bg-white/6 hover:text-white/70')}>
-                        <p className="font-mono text-xs text-white/30 mb-0.5">{preset.code}</p>
+                        <p className="font-mono text-xs text-white/70 mb-0.5">{preset.code}</p>
                         <p className="leading-snug">{preset.name}</p>
                       </button>
                     ))}

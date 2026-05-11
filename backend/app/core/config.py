@@ -44,7 +44,7 @@ class Settings(BaseSettings):
     CLINICAL_TRIALS_API_URL: str = "https://clinicaltrials.gov/api/v2"
 
     # CORS
-    CORS_ORIGINS: str = "http://localhost:3000"
+    CORS_ORIGINS: str = "*"
 
     @property
     def cors_origins_list(self) -> List[str]:

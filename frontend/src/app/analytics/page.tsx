@@ -17,13 +17,13 @@ const MetricCard = ({ title, value, unit, sub, color, trend }: any) => (
     className="glass-panel rounded-2xl p-5 border"
     style={{ borderColor: `${color}18` }}
   >
-    <p className="text-xs text-white/40 uppercase tracking-wider mb-3">{title}</p>
+    <p className="text-xs text-white/80 uppercase tracking-wider mb-3">{title}</p>
     <div className="flex items-end gap-2">
       <span className="text-3xl font-display font-bold" style={{ color }}>{value}</span>
-      {unit && <span className="text-sm text-white/40 mb-1">{unit}</span>}
+      {unit && <span className="text-sm text-white/80 mb-1">{unit}</span>}
     </div>
     <div className="flex items-center justify-between mt-2">
-      <p className="text-xs text-white/30">{sub}</p>
+      <p className="text-xs text-white/70">{sub}</p>
       {trend && (
         <span className={`text-xs font-medium ${trend > 0 ? 'text-emerald-400' : 'text-rose-400'}`}>
           {trend > 0 ? '+' : ''}{trend}%
@@ -88,7 +88,7 @@ export default function AnalyticsPage() {
     <div className="p-8 space-y-8">
       <div>
         <h1 className="font-display text-2xl font-bold text-white">Analytics and Insights</h1>
-        <p className="text-white/40 text-sm mt-1">Platform performance and clinical outcome metrics</p>
+        <p className="text-white/80 text-sm mt-1">Platform performance and clinical outcome metrics</p>
       </div>
 
       {/* Key metrics */}
@@ -133,9 +133,9 @@ export default function AnalyticsPage() {
           <div className="flex items-center justify-between mb-5">
             <div>
               <h3 className="text-sm font-semibold text-white">Authorization Volume and Outcomes</h3>
-              <p className="text-xs text-white/30 mt-0.5">14-day rolling window</p>
+              <p className="text-xs text-white/70 mt-0.5">14-day rolling window</p>
             </div>
-            <div className="flex gap-4 text-xs text-white/40">
+            <div className="flex gap-4 text-xs text-white/80">
               <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-cyan-400 inline-block"/>Submitted</span>
               <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-emerald-400 inline-block"/>Approved</span>
               <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-rose-400 inline-block"/>Denied</span>
@@ -192,14 +192,14 @@ export default function AnalyticsPage() {
       <div className="glass-panel rounded-2xl border border-white/6 overflow-hidden">
         <div className="px-6 py-4 border-b border-white/6">
           <h3 className="text-sm font-semibold text-white">Agent Performance Metrics</h3>
-          <p className="text-xs text-white/30 mt-0.5">Real-time agent call statistics and reliability</p>
+          <p className="text-xs text-white/70 mt-0.5">Real-time agent call statistics and reliability</p>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
               <tr className="border-b border-white/5">
                 {['Agent', 'Total Calls', 'Success Rate', 'Avg Latency', 'Status'].map(h => (
-                  <th key={h} className="px-6 py-3 text-left text-xs font-medium text-white/30 uppercase tracking-wider">{h}</th>
+                  <th key={h} className="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">{h}</th>
                 ))}
               </tr>
             </thead>
@@ -228,7 +228,7 @@ export default function AnalyticsPage() {
                       <span className="text-xs text-emerald-400">{agent.success}%</span>
                     </div>
                   </td>
-                  <td className="px-6 py-3.5 text-xs font-mono text-white/40">{agent.latency}s</td>
+                  <td className="px-6 py-3.5 text-xs font-mono text-white/80">{agent.latency}s</td>
                   <td className="px-6 py-3.5">
                     <span className="px-2.5 py-1 rounded-lg text-xs status-approved">Operational</span>
                   </td>

@@ -9,23 +9,30 @@ import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
 } from 'recharts'
 
-const StatCard = ({ title, value, sub, color, icon, delay = 0 }: any) => (
-  <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-    transition={{ delay }} className="glass-panel rounded-2xl p-5 border"
-    style={{ borderColor: `${color}18` }}>
-    <div className="flex items-start justify-between mb-3">
-      <div className="w-10 h-10 rounded-xl flex items-center justify-center"
-        style={{ background: `${color}12`, border: `1px solid ${color}28` }}>
-        <span style={{ color }}>{icon}</span>
+const StatCard = ({ title, value, sub, colorClass, icon, delay = 0 }: any) => (
+  <motion.div
+    initial={{ opacity: 0, y: 16 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ delay, duration: 0.4, ease: 'easeOut' }}
+    className={`kpi-card ${colorClass}`}
+  >
+    <div className="flex items-start justify-between mb-4">
+      <div className="flex-1">
+        <p className="text-[11px] font-display font-semibold uppercase tracking-widest mb-1 text-slate-400/80">
+          {title}
+        </p>
+        <p className="text-[11px] text-slate-500">{sub}</p>
       </div>
-      <div className="text-right">
-        <div className="text-2xl font-display font-bold text-white">{value}</div>
-        <div className="text-xs text-white/35 mt-0.5">{sub}</div>
+      <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ml-3 bg-white/[0.03] border border-white/[0.08] shadow-inner">
+        {icon}
       </div>
     </div>
-    <p className="text-sm text-white/45 font-medium">{title}</p>
+    <p className="font-display font-bold text-3xl tracking-tight text-white drop-shadow-sm">
+      {value}
+    </p>
   </motion.div>
 )
+
 
 const customTooltip = ({ active, payload, label }: any) => {
   if (!active || !payload?.length) return null
@@ -77,90 +84,93 @@ export default function DashboardPage() {
   const runningSession = agentSessions.find(s => s.status === 'running')
 
   return (
-    <div className="p-8 space-y-8">
-      {/* Header */}
+    <div className="p-8 space-y-7 bg-grid-subtle min-h-screen">
+      {/* ── Page header (Stitch headline-lg + surface-container status chip) ── */}
       <div className="flex items-center justify-between">
         <div>
-          <motion.h1 initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}
-            className="font-display text-2xl font-bold text-white">
-            Clinical Intelligence Dashboard
+          <motion.h1 initial={{ opacity: 0, x: -16 }} animate={{ opacity: 1, x: 0 }}
+            className="font-display font-bold text-2xl tracking-tight"
+            style={{ color: '#dbe2f7', letterSpacing: '-0.02em' }}>
+            Clinical Command Center
           </motion.h1>
-          <p className="text-white/40 text-sm mt-1">Real-time multi-agent healthcare operations</p>
+          <p className="text-sm mt-1" style={{ color: 'rgba(186,201,204,0.5)' }}>
+            Autonomous Clinical Decision Platform
+          </p>
         </div>
-        <div className="flex items-center gap-3">
-          <div className={cn('flex items-center gap-2 px-4 py-2 rounded-xl border',
-            runningSession
-              ? 'border-cyan-400/20 bg-cyan-400/5'
-              : 'border-emerald-400/20 bg-emerald-400/5')}>
-            <div className={cn('w-2 h-2 rounded-full',
-              runningSession ? 'bg-cyan-400 animate-pulse' : 'bg-emerald-400')} />
-            <span className={cn('text-xs font-medium',
-              runningSession ? 'text-cyan-400' : 'text-emerald-400')}>
-              {runningSession ? 'Agent Workflow Running' : 'All Systems Operational'}
-            </span>
+        <div className="flex items-center gap-4">
+          <div className={cn('status-badge rounded-md', runningSession ? 'status-running' : 'status-approved')}>
+            <span className={cn('w-2 h-2 rounded-full', runningSession ? 'animate-pulse' : '')} 
+                  style={{ background: runningSession ? '#00e5ff' : '#00ff87' }} />
+            {runningSession ? 'Agent Workflow Running' : 'All Systems Operational'}
           </div>
           <Link href="/agents">
-            <button className="px-4 py-2 rounded-xl text-xs font-semibold text-void"
-              style={{ background: 'linear-gradient(135deg, #00f5ff, #06d6f5)', boxShadow: '0 0 15px rgba(0,245,255,0.25)' }}>
+            {/* Stitch "btn-primary" luminous button */}
+            <button className="btn-primary px-4 py-2 rounded-lg text-xs font-semibold font-display cursor-pointer">
               Launch Agent Workflow
             </button>
           </Link>
         </div>
       </div>
 
-      {/* Stats grid */}
+      {/* ── KPI cards (Stitch colored top-border accent) ── */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard delay={0} title="Total Patients" value={loading ? '—' : stats?.total_patients ?? 0} sub="Active cases" color="#00f5ff"
-          icon={<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>} />
-        <StatCard delay={0.05} title="Pending Authorizations" value={loading ? '—' : stats?.pending_auths ?? 0} sub="Awaiting decision" color="#fbbf24"
-          icon={<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12"/><polyline points="14,2 14,8 20,8"/></svg>} />
-        <StatCard delay={0.1} title="Approval Rate" value={loading ? '—' : `${Math.round((stats?.approval_rate || 0) * 100)}%`} sub={`${stats?.approved_auths ?? 0} approved`} color="#00ff87"
-          icon={<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="20,6 9,17 4,12"/></svg>} />
-        <StatCard delay={0.15} title="Time Saved" value={loading ? '—' : `${Math.round(stats?.time_saved_hours || 0)}h`} sub="vs manual processing" color="#a855f7"
-          icon={<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>} />
+        <StatCard delay={0} colorClass="cyan" title="Total Patients" value={loading ? '—' : stats?.total_patients ?? 0} sub="Active clinical cases"
+          icon={<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00e5ff" strokeWidth="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>} />
+        <StatCard delay={0.05} colorClass="amber" title="Pending Authorizations" value={loading ? '—' : stats?.pending_auths ?? 0} sub="Awaiting payer decision"
+          icon={<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12"/><polyline points="14,2 14,8 20,8"/></svg>} />
+        <StatCard delay={0.1} colorClass="emerald" title="Approval Rate" value={loading ? '—' : `${Math.round((stats?.approval_rate || 0) * 100)}%`} sub={`${stats?.approved_auths ?? 0} approved total`}
+          icon={<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00ef7e" strokeWidth="2"><polyline points="20,6 9,17 4,12"/></svg>} />
+        <StatCard delay={0.15} colorClass="violet" title="AI Time Saved" value={loading ? '—' : `${Math.round(stats?.time_saved_hours || 0)}h`} sub="vs manual processing"
+          icon={<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a855f7" strokeWidth="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>} />
       </div>
+
 
       {/* Charts + agent feed */}
       <div className="grid grid-cols-3 gap-6">
-        {/* Trends chart */}
-        <div className="col-span-2 glass-panel rounded-2xl p-6 border border-white/6">
+        {/* ── Authorization Trends Chart ── */}
+        <div className="col-span-2 rounded-2xl p-6 glass-panel">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h3 className="text-sm font-semibold text-white">Authorization Trends</h3>
-              <p className="text-xs text-white/35 mt-0.5">14-day real authorization data</p>
+              <h3 className="text-sm font-display font-semibold text-white tracking-wide">
+                Approval Trends
+              </h3>
+              <p className="text-[11px] mt-1 text-slate-400">
+                14-day authorization data · real-time
+              </p>
             </div>
-            <div className="flex items-center gap-4 text-xs text-white/35">
-              <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-cyan-400 inline-block"/>Submitted</span>
-              <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-emerald-400 inline-block"/>Approved</span>
-              <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-rose-400 inline-block"/>Denied</span>
+            <div className="flex items-center gap-5 text-[11px] font-medium text-slate-400 uppercase tracking-wider">
+              <span className="flex items-center gap-2"><span className="w-2.5 h-2.5 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(0,229,255,0.6)]"/>Submitted</span>
+              <span className="flex items-center gap-2"><span className="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(0,255,135,0.6)]"/>Approved</span>
+              <span className="flex items-center gap-2"><span className="w-2.5 h-2.5 rounded-full bg-rose-400 shadow-[0_0_8px_rgba(244,63,94,0.6)]"/>Denied</span>
             </div>
           </div>
           {loading ? (
             <div className="h-48 skeleton rounded-xl" />
-          ) : trends.length === 0 || trends.every(t => t.submitted === 0) ? (
-            <div className="h-48 flex items-center justify-center text-white/25 text-sm">
+          ) : trends.length === 0 || trends.every((t: any) => t.submitted === 0) ? (
+            <div className="h-48 flex items-center justify-center text-sm" style={{ color: 'rgba(186,201,204,0.3)' }}>
               No authorization data yet. Create prior authorizations to see trends.
             </div>
           ) : (
             <ResponsiveContainer width="100%" height={200}>
               <AreaChart data={trends}>
                 <defs>
+                  {/* Stitch: semi-transparent area fills, glowing line strokes */}
                   <linearGradient id="gCyan" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#00f5ff" stopOpacity={0.25}/><stop offset="100%" stopColor="#00f5ff" stopOpacity={0}/>
+                    <stop offset="0%" stopColor="#00e5ff" stopOpacity={0.22}/><stop offset="100%" stopColor="#00e5ff" stopOpacity={0}/>
                   </linearGradient>
                   <linearGradient id="gGreen" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="0%" stopColor="#00ff87" stopOpacity={0.25}/><stop offset="100%" stopColor="#00ff87" stopOpacity={0}/>
                   </linearGradient>
                   <linearGradient id="gRose" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#f43f5e" stopOpacity={0.2}/><stop offset="100%" stopColor="#f43f5e" stopOpacity={0}/>
+                    <stop offset="0%" stopColor="#f43f5e" stopOpacity={0.18}/><stop offset="100%" stopColor="#f43f5e" stopOpacity={0}/>
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
-                <XAxis dataKey="date" tick={{ fill: 'rgba(255,255,255,0.25)', fontSize: 10 }} tickFormatter={v => v?.slice(5)} />
-                <YAxis tick={{ fill: 'rgba(255,255,255,0.25)', fontSize: 10 }} allowDecimals={false} />
+                <XAxis dataKey="date" tick={{ fill: 'rgba(186,201,204,0.3)', fontSize: 10, fontFamily: 'Inter' }} tickFormatter={v => v?.slice(5)} />
+                <YAxis tick={{ fill: 'rgba(186,201,204,0.3)', fontSize: 10, fontFamily: 'Inter' }} allowDecimals={false} />
                 <Tooltip content={customTooltip} />
-                <Area type="monotone" dataKey="submitted" stroke="#00f5ff" strokeWidth={2} fill="url(#gCyan)" name="Submitted" />
-                <Area type="monotone" dataKey="approved" stroke="#00ff87" strokeWidth={2} fill="url(#gGreen)" name="Approved" />
+                <Area type="monotone" dataKey="submitted" stroke="#00e5ff" strokeWidth={2} fill="url(#gCyan)" name="Submitted" />
+                <Area type="monotone" dataKey="approved" stroke="#00ef7e" strokeWidth={2} fill="url(#gGreen)" name="Approved" />
                 <Area type="monotone" dataKey="denied" stroke="#f43f5e" strokeWidth={1.5} fill="url(#gRose)" name="Denied" />
               </AreaChart>
             </ResponsiveContainer>

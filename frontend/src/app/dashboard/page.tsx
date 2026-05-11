@@ -67,7 +67,7 @@ export default function DashboardPage() {
       setTrends(trendsRes.data.trends?.slice(-14) || [])
       setAgentSessions(sessionsRes.data.sessions || [])
     } catch (err) {
-      console.error('Dashboard load error', err)
+      console.warn('Dashboard load error (backend may be unavailable)', err)
     } finally {
       setLoading(false)
     }

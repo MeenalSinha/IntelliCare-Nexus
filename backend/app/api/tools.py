@@ -38,7 +38,17 @@ async def invoke_tool(
     """
     result = await tool_registry.invoke(request.tool_name, **request.parameters)
     if not result.success:
-        raise HTTPException(status_code=400, detail=result.error)
+        # Provide a user-friendly message for missing-parameter errors
+        error_msg = result.error or "Tool invocation failed"
+        if "missing" in error_msg and "required positional argument" in error_msg:
+            schema = {t["name"]: t["input_schema"] for t in tool_registry.list_tools()}
+            required = schema.get(request.tool_name, {})
+            error_msg = (
+                f"Missing required parameters for '{request.tool_name}'. "
+                f"Expected: {list(required.keys())}. "
+                f"Please populate the Parameters field and click 'Load demo params' if available."
+            )
+        raise HTTPException(status_code=400, detail=error_msg)
     return {
         "tool": result.tool_name,
         "success": result.success,

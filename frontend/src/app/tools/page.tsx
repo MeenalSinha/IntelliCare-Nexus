@@ -69,6 +69,137 @@ const QUICK_PARAMS: Record<string, any> = {
     patient_id: 'demo-patient-id',
     details: { diagnoses_count: 2, session_id: 'demo-session' },
   },
+  build_fhir_bundle: {
+    patient_data: {
+      id: "demo-123",
+      mrn: "MRN88492",
+      first_name: "Arjun",
+      last_name: "Sharma",
+      gender: "male",
+      date_of_birth: "1966-03-15",
+      language_preference: "en",
+      phone: "+1-555-0198",
+      diagnosis_codes: ["C34.10"],
+      primary_diagnosis: "Non-small cell lung cancer",
+      medications: [
+        { name: "Pembrolizumab", dose: "200mg", frequency: "Q3W" }
+      ],
+      lab_results: [
+        { test: "PD-L1 TPS", value: "85%", date: "2023-02-01" }
+      ],
+      insurance_provider: "UnitedHealthcare",
+      insurance_policy_number: "UH99281A"
+    }
+  },
+  parse_fhir_bundle: {
+    fhir_bundle: {
+      resourceType: 'Bundle',
+      type: 'collection',
+      entry: [
+        {
+          resource: {
+            resourceType: 'Patient',
+            id: 'demo-123',
+            name: [{ use: 'official', family: 'Sharma', given: ['Arjun'] }],
+            gender: 'male',
+            birthDate: '1966-03-15',
+          },
+        },
+        {
+          resource: {
+            resourceType: 'Condition',
+            code: { coding: [{ system: 'http://hl7.org/fhir/sid/icd-10', code: 'C34.10', display: 'Non-small cell lung cancer' }] },
+            clinicalStatus: { coding: [{ code: 'active' }] },
+            subject: { reference: 'Patient/demo-123' },
+          },
+        },
+      ],
+    },
+  },
+  find_eligible_trials: {
+    patient_context: {
+      primary_diagnoses: [{ code: 'C34.10', description: 'Non-small cell lung cancer, stage IIIB' }],
+      genomic_findings: [{ gene: 'KRAS', variant: 'G12C' }],
+      relevant_labs: [{ test: 'PD-L1 TPS', value: '85%' }],
+      age: 58,
+      gender: 'male',
+      ecog_ps: 1,
+    },
+    max_results: 3,
+  },
+  generate_medical_necessity_letter: {
+    patient_context: {
+      patient_name: 'Arjun Sharma',
+      age: 58,
+      diagnosis: 'Non-small cell lung cancer, Stage IIIB (C34.10)',
+      ecog_ps: 1,
+      genomics: 'KRAS G12C mutation, PD-L1 TPS 85%',
+      prior_treatments: 'Treatment-naive',
+    },
+    procedure: {
+      name: 'Pembrolizumab (Keytruda)',
+      code: 'J9271',
+      indication: 'First-line metastatic NSCLC with PD-L1 TPS >= 50%',
+    },
+    payer_criteria: {
+      payer: 'UnitedHealthcare',
+      criteria: ['PD-L1 TPS >= 50%', 'No prior checkpoint inhibitor', 'ECOG PS 0-2'],
+      documentation_required: ['Pathology report', 'PD-L1 assay result', 'Performance status documentation'],
+    },
+  },
+  calculate_approval_probability: {
+    patient_context: {
+      patient_name: 'Arjun Sharma',
+      age: 58,
+      diagnosis: 'Non-small cell lung cancer, Stage IIIB',
+      ecog_ps: 1,
+      genomics: 'KRAS G12C mutation, PD-L1 TPS 85%',
+    },
+    procedure: {
+      name: 'Pembrolizumab (Keytruda)',
+      code: 'J9271',
+      indication: 'First-line metastatic NSCLC',
+    },
+    payer_criteria: {
+      payer: 'UnitedHealthcare',
+      criteria: ['PD-L1 TPS >= 50%', 'ECOG PS 0-2', 'No prior checkpoint inhibitor therapy'],
+    },
+  },
+  generate_appeal_letter: {
+    patient_context: {
+      patient_name: 'Arjun Sharma',
+      age: 58,
+      diagnosis: 'Non-small cell lung cancer, Stage IIIB (C34.10)',
+      ecog_ps: 1,
+      genomics: 'KRAS G12C mutation, PD-L1 TPS 85%',
+    },
+    prior_auth: {
+      id: 'PA-2024-001',
+      procedure: 'Pembrolizumab (Keytruda) J9271',
+      payer: 'UnitedHealthcare',
+      submitted_date: '2024-01-15',
+      status: 'DENIED',
+    },
+    denial_reason: 'Medical necessity not established. PD-L1 documentation insufficient per payer policy UHC-ONC-2024-11.',
+  },
+  eligibility_reasoning: {
+    patient_context: {
+      age: 58,
+      gender: 'male',
+      diagnosis: 'Non-small cell lung cancer, Stage IIIB',
+      ecog_ps: 1,
+      genomics: { KRAS: 'G12C', 'PD-L1 TPS': '85%' },
+      prior_treatments: [],
+      active_conditions: ['NSCLC'],
+    },
+    trial: {
+      nct_id: 'NCT04269928',
+      title: 'CODEBREAK 200: Sotorasib vs Docetaxel in KRAS G12C NSCLC',
+      phase: 'Phase 3',
+      inclusion_criteria: ['KRAS G12C mutation', 'Stage IIIB/IV NSCLC', 'ECOG PS 0-2', 'Age 18+'],
+      exclusion_criteria: ['Active CNS metastases', 'Prior KRAS inhibitor therapy'],
+    },
+  },
 }
 
 export default function ToolsPage() {

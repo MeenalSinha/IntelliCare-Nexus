@@ -115,6 +115,22 @@ The platform uses 10 specialized AI agents orchestrated via LangGraph:
 
 ---
 
+## MCP Server (A2A Agent) & SHARP Extension Specs
+
+The platform includes a dedicated Model Context Protocol (MCP) server implementation (`backend/app/mcp_server.py`) designed for A2A (Agent-to-Agent) communication.
+
+**Compliance with Hackathon Requirements:**
+1. **MCP Server built on own infrastructure:** Implemented using the standard Python `mcp` SDK, runnable locally.
+2. **SHARP Extension Specs Integration:** Handled natively by accepting `patient_id` and `fhir_token` as context parameters to securely fetch and isolate patient data.
+3. **FHIR Server Data:** Connects directly to public HAPI FHIR servers to execute data ingestion and perform medical necessity analysis based on live FHIR data.
+
+To run the MCP server independently:
+```bash
+python -m backend.app.mcp_server
+```
+
+---
+
 ## API Documentation
 
 Full OpenAPI docs available at `http://localhost:8000/docs` when running.

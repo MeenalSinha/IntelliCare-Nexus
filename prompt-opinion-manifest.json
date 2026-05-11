@@ -1,0 +1,32 @@
+{
+  "name": "intellicare-nexus",
+  "displayName": "IntelliCare Nexus A2A Agent",
+  "version": "1.0.0",
+  "description": "Autonomous Clinical Decision and Access Platform. Features multi-agent orchestration for Prior Authorization and Clinical Trial Matching using SHARP Extension Specs.",
+  "author": "Meenal Sinha",
+  "categories": ["Healthcare", "Clinical Agents", "FHIR", "Prior Authorization"],
+  "tags": ["mcp", "sharp-specs", "langgraph", "gemini", "fhir"],
+  "mcpServer": {
+    "type": "stdio",
+    "command": "python",
+    "args": ["-m", "backend.app.mcp_server"],
+    "tools": [
+      "get_patient_fhir_data",
+      "analyze_medical_necessity"
+    ]
+  },
+  "sharpIntegration": {
+    "supportedContexts": [
+      "patient_id",
+      "fhir_token"
+    ],
+    "fhirSources": [
+      "https://hapi.fhir.org/baseR4"
+    ]
+  },
+  "marketplaceConfig": {
+    "visibility": "public",
+    "pricing": "free",
+    "icon": "./frontend/public/logo.png"
+  }
+}
